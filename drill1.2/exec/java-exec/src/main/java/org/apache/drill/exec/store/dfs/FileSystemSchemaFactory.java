@@ -153,6 +153,11 @@ public class FileSystemSchemaFactory implements SchemaFactory{
     public CreateTableEntry createNewTable(String tableName, List<String> partitionColumns) {
       return defaultSchema.createNewTable(tableName, partitionColumns);
     }
+    
+    @Override
+    public CreateTableEntry trainNewModel(String modelName, List<String> partitionColumns) {
+      return defaultSchema.trainNewModel(modelName, partitionColumns);
+    }
 
     @Override
     public AbstractSchema getDefaultSchema() {

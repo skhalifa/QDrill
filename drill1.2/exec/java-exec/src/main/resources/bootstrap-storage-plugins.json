@@ -28,7 +28,14 @@
           type: "text",
           extensions: [ "tsv" ],
           delimiter: "\t"
-        },
+        },      
+		"model": {
+	      "type": "model",
+	      "extensions": [
+	        "model"
+	      ],
+	      "delimiter": ""
+		},
         "parquet" : {
           type: "parquet"
         },
