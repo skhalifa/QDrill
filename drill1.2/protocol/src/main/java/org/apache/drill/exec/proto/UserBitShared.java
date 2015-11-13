@@ -487,6 +487,14 @@ public final class UserBitShared {
      * <code>AVRO_SUB_SCAN = 36;</code>
      */
     AVRO_SUB_SCAN(36, 36),
+    /**
+     * <code>MODEL_SCAN = 37;</code>
+     */
+    MODEL_SCAN(37, 37),
+    /**
+     * <code>MODEL_WRITER = 38;</code>
+     */
+    MODEL_WRITER(38, 38),
     ;
 
     /**
@@ -637,6 +645,14 @@ public final class UserBitShared {
      * <code>AVRO_SUB_SCAN = 36;</code>
      */
     public static final int AVRO_SUB_SCAN_VALUE = 36;
+    /**
+     * <code>MODEL_SCAN = 37;</code>
+     */
+    public static final int MODEL_SCAN_VALUE = 37;
+    /**
+     * <code>MODEL_WRITER = 38;</code>
+     */
+    public static final int MODEL_WRITER_VALUE = 38;
 
 
     public final int getNumber() { return value; }
@@ -680,6 +696,8 @@ public final class UserBitShared {
         case 34: return WINDOW;
         case 35: return NESTED_LOOP_JOIN;
         case 36: return AVRO_SUB_SCAN;
+        case 37: return MODEL_SCAN;
+        case 38: return MODEL_WRITER;
         default: return null;
       }
     }

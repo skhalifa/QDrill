@@ -242,6 +242,37 @@ SqlNode SqlCreateTable() :
 }
 
 /**
+ * Parses a TMAS statement.
+ * TRAIN MODEL mdlname [ (field1, field2, ...) ] AS select_statement.
+ */
+SqlNode SqlTrainModel() :
+{
+    SqlParserPos pos;
+    SqlIdentifier mdlName;
+    SqlNodeList fieldList;
+    SqlNodeList partitionFieldList;
+    SqlNode query;
+}
+{
+    {
+        partitionFieldList = SqlNodeList.EMPTY;
+    }
+    <TRAIN> { pos = getPos(); }
+    <MODEL>
+    mdlName = CompoundIdentifier()
+    fieldList = ParseOptionalFieldList("Model")
+    (   <PARTITION> <BY>
+        partitionFieldList = ParseRequiredFieldList("Partition")
+    )?
+    <AS>
+    query = OrderedQueryOrExpr(ExprContext.ACCEPT_QUERY)
+    {
+        return new SqlTrainModel(pos, mdlName, fieldList,partitionFieldList, query);
+    }
+}
+
+
+/**
  * Parses a drop table statement.
  * DROP TABLE table_name;
  */

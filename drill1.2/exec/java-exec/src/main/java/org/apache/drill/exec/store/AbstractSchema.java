@@ -125,6 +125,18 @@ public abstract class AbstractSchema implements Schema, SchemaPartitionExplorer,
         .message("Creating new tables is not supported in schema [%s]", getSchemaPath())
         .build(logger);
   }
+  
+  /**
+  *
+  * @param modelName : new model name.
+  * @param partitionColumns : list of partition columns. Empty list if there is no partition columns.
+  * @return
+  */
+ public CreateTableEntry trainNewModel(String modelName, List<String> partitionColumns) {
+   throw UserException.unsupportedError()
+       .message("Training new models is not supported in schema [%s]", getSchemaPath())
+       .build(logger);
+ }
 
   /**
    * Reports whether to show items from this schema in INFORMATION_SCHEMA

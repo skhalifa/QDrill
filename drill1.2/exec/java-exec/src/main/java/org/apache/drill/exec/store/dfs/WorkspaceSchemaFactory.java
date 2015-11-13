@@ -30,8 +30,8 @@ import java.util.regex.Pattern;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import org.apache.calcite.schema.Table;
 
+import org.apache.calcite.schema.Table;
 import org.apache.drill.common.config.DrillConfig;
 import org.apache.drill.common.exceptions.ExecutionSetupException;
 import org.apache.drill.common.exceptions.UserException;
@@ -46,6 +46,7 @@ import org.apache.drill.exec.planner.logical.DrillTable;
 import org.apache.drill.exec.planner.logical.DrillViewTable;
 import org.apache.drill.exec.planner.logical.DynamicDrillTable;
 import org.apache.drill.exec.planner.logical.FileSystemCreateTableEntry;
+import org.apache.drill.exec.planner.logical.FileSystemTrainModelEntry;
 import org.apache.drill.exec.planner.sql.ExpandingConcurrentMap;
 import org.apache.drill.exec.store.AbstractSchema;
 import org.apache.drill.exec.store.PartitionNotFoundException;
@@ -60,6 +61,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
 import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.security.AccessControlException;
 
@@ -303,6 +305,26 @@ public class WorkspaceSchemaFactory {
           (FileSystemConfig) plugin.getConfig(),
           formatPlugin,
           config.getLocation() + Path.SEPARATOR + tableName,
+          partitonColumns);
+    }
+    
+    //TODO: Shadi change plugin to not include commas
+    @Override
+    public CreateTableEntry trainNewModel(String modelName, List<String> partitonColumns) {
+      String storage = schemaConfig.getOption(ExecConstants.OUTPUT_FORMAT_OPTION).string_val;
+//      System.out.println("Shadi: Sotrage="+storage);
+//      logger.info("Shadi: Storage="+storage);
+      FormatPlugin formatPlugin = plugin.getFormatPlugin(storage);
+      if (formatPlugin == null) {
+        throw new UnsupportedOperationException(
+          String.format("Unsupported format '%s' in workspace '%s'", config.getDefaultInputFormat(),
+              Joiner.on(".").join(getSchemaPath())));
+      }
+
+      return new FileSystemTrainModelEntry(
+          (FileSystemConfig) plugin.getConfig(),
+          formatPlugin,
+          config.getLocation() + Path.SEPARATOR + modelName,
           partitonColumns);
     }
 
