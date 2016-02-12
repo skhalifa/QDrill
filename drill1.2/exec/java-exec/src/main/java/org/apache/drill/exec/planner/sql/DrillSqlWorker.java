@@ -198,7 +198,7 @@ public class DrillSqlWorker {
 	    		sql=sql.replace(';', ',');
     		}
     		logger.info("Final new train SQL statement= "+sql);
-    	} else 	if(sql.toLowerCase().contains("qdm_test")){
+    	} else 	if(sql.toLowerCase().contains("qdm_test") || sql.toLowerCase().contains("qdm_update")){
     		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_"));
     		logger.info("before qdmFunction= "+newSqlBefore);
     		
