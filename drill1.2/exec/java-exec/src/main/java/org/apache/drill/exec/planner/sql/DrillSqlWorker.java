@@ -146,7 +146,7 @@ public class DrillSqlWorker {
     try {
     	String originalSql = sql;
     	logger.info("SQL string with pointer= "+sql);
-    	if(sql.toLowerCase().contains("qdm_train")){
+    	if(sql.toLowerCase().contains("qdm_train") || sql.toLowerCase().contains("qdm_Ensemble")){
     		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_"));
     		logger.info("before qdmFunction= "+newSqlBefore);
     		
@@ -250,6 +250,55 @@ public class DrillSqlWorker {
 	    		sql=sql.replace(';', ',');
     		}
     		logger.info("Final new test SQL statement= "+sql);
+    	} 
+    	
+    	if(sql.toLowerCase().contains("qdm_shuffle")){
+    		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_shuffle"));
+    		logger.info("before qdmFunction= "+newSqlBefore);
+    		
+    		int brackets=0;
+    		int i=sql.toLowerCase().indexOf("qdm_shuffle")+11;
+    		for(;i<sql.length();i++){
+    			if(sql.charAt(i)=='('||sql.charAt(i)=='{'||sql.charAt(i)=='[')
+    				brackets++;
+    			else if(sql.charAt(i)==')'||sql.charAt(i)=='}'||sql.charAt(i)==']'){
+    				brackets--;
+    			}
+    			
+    			if(brackets>1 && sql.charAt(i)==','){
+    				sql = sql.substring(0,i)+';'+sql.substring(i+1);
+    			}
+    			
+    			if(sql.charAt(i)==')' && brackets==0)
+    				break;
+    		}
+    		
+    		logger.info("Transition with ; insterted= "+sql);
+    		String newSqlAfter = sql.substring(i+1);
+    		logger.info("after qdmFunction= "+newSqlAfter);
+    		String qdmFunction = sql.substring(sql.toLowerCase().indexOf("qdm_shuffle"), i+1);
+    		logger.info("qdmFunction= "+qdmFunction);
+    		String functionName = qdmFunction.substring(0, qdmFunction.indexOf("("));
+    		logger.info("functionName= "+functionName);
+    		//TODO: Fix bug when the string has commas inside a function like concat
+    		StringTokenizer st = new StringTokenizer(qdmFunction.substring(qdmFunction.indexOf("(")+1), ",");
+    		if(st.countTokens()<3){
+    			sql = originalSql;
+    		} else {
+    			String NumWorkers = st.nextToken();
+	    		logger.info("num workers= "+NumWorkers);
+	    		String firstAttribute = st.nextToken();
+	    		boolean hasMoreAttribtues = false;
+	    		String concatString = "concat("+firstAttribute;
+	    		while (st.hasMoreTokens()) {
+	    			concatString+=","+"','"+","+st.nextToken();
+	    			hasMoreAttribtues = true;
+	    		}
+	    		concatString+=")";
+	    		sql=newSqlBefore+functionName+"("+NumWorkers+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
+	    		sql=sql.replace(';', ',');
+    		}
+    		logger.info("Final new shuffle SQL statement= "+sql);
     	}
     	
     	if(sql.toLowerCase().contains("applying")){
