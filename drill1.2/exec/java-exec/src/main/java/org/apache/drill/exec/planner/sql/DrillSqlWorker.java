@@ -146,7 +146,7 @@ public class DrillSqlWorker {
     try {
     	String originalSql = sql;
     	logger.info("SQL string with pointer= "+sql);
-    	if(sql.toLowerCase().contains("qdm_train") || sql.toLowerCase().contains("qdm_Ensemble")){
+    	if(sql.toLowerCase().contains("qdm_train") || sql.toLowerCase().contains("qdm_ensemble")){
     		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_"));
     		logger.info("before qdmFunction= "+newSqlBefore);
     		
@@ -198,7 +198,7 @@ public class DrillSqlWorker {
 	    		sql=sql.replace(';', ',');
     		}
     		logger.info("Final new train SQL statement= "+sql);
-    	} else 	if(sql.toLowerCase().contains("qdm_test") || sql.toLowerCase().contains("qdm_update")){
+    	} else 	if(sql.toLowerCase().contains("qdm_score") || sql.toLowerCase().contains("qdm_update")){
     		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_"));
     		logger.info("before qdmFunction= "+newSqlBefore);
     		
@@ -249,15 +249,15 @@ public class DrillSqlWorker {
 	    		sql=newSqlBefore+functionName+"("+operation+","+args+","+model+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
 	    		sql=sql.replace(';', ',');
     		}
-    		logger.info("Final new test SQL statement= "+sql);
+    		logger.info("Final new score SQL statement= "+sql);
     	} 
     	
-    	if(sql.toLowerCase().contains("qdm_shuffle")){
-    		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_shuffle"));
+    	if(sql.toLowerCase().contains("qdm_ladp")){
+    		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_ladp"));
     		logger.info("before qdmFunction= "+newSqlBefore);
     		
     		int brackets=0;
-    		int i=sql.toLowerCase().indexOf("qdm_shuffle")+11;
+    		int i=sql.toLowerCase().indexOf("qdm_ladp")+8;
     		for(;i<sql.length();i++){
     			if(sql.charAt(i)=='('||sql.charAt(i)=='{'||sql.charAt(i)=='[')
     				brackets++;
@@ -276,7 +276,7 @@ public class DrillSqlWorker {
     		logger.info("Transition with ; insterted= "+sql);
     		String newSqlAfter = sql.substring(i+1);
     		logger.info("after qdmFunction= "+newSqlAfter);
-    		String qdmFunction = sql.substring(sql.toLowerCase().indexOf("qdm_shuffle"), i+1);
+    		String qdmFunction = sql.substring(sql.toLowerCase().indexOf("qdm_ladp"), i+1);
     		logger.info("qdmFunction= "+qdmFunction);
     		String functionName = qdmFunction.substring(0, qdmFunction.indexOf("("));
     		logger.info("functionName= "+functionName);
@@ -298,7 +298,7 @@ public class DrillSqlWorker {
 	    		sql=newSqlBefore+functionName+"("+NumWorkers+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
 	    		sql=sql.replace(';', ',');
     		}
-    		logger.info("Final new shuffle SQL statement= "+sql);
+    		logger.info("Final new ladp SQL statement= "+sql);
     	}
     	
     	if(sql.toLowerCase().contains("applying")){
