@@ -37,11 +37,7 @@ import org.apache.drill.exec.record.MaterializedField;
 import org.apache.drill.exec.store.AbstractRecordReader;
 import org.apache.drill.exec.store.dfs.DrillFileSystem;
 import org.apache.drill.exec.vector.RepeatedVarCharVector;
-import org.apache.drill.exec.vector.VarCharVector;
-import org.apache.drill.exec.vector.complex.impl.VarCharReaderImpl;
 import org.apache.drill.exec.vector.complex.impl.VectorContainerWriter;
-import org.apache.drill.exec.vector.complex.reader.FieldReader;
-import org.apache.drill.exec.vector.complex.reader.VarCharReader;
 import org.apache.drill.exec.vector.complex.writer.VarCharWriter;
 import org.apache.hadoop.fs.Path;
 
@@ -55,6 +51,7 @@ public class DrillModelReader extends AbstractRecordReader {
 	private VarCharWriter writer;
 	private RepeatedVarCharVector vector;
 	private Path hadoopPath;
+	private String inputPath;
 	private BufferedInputStream stream;
 	private DrillFileSystem fileSystem;
 	//  private JsonReader jsonReader;
@@ -68,6 +65,7 @@ public class DrillModelReader extends AbstractRecordReader {
 
 	public DrillModelReader(FragmentContext fragmentContext, String inputPath, DrillFileSystem fileSystem,
 			List<SchemaPath> columns) throws OutOfMemoryException {
+		this.inputPath = inputPath;
 		this.hadoopPath = new Path(inputPath);
 		this.fileSystem = fileSystem;
 		this.fragmentContext = fragmentContext;
@@ -131,13 +129,17 @@ public class DrillModelReader extends AbstractRecordReader {
 
 			stream.read(outbuff, 0, outbuff.length);
 
-//			logger.info("Shadi: outbuff = "+ new String(outbuff, com.google.common.base.Charsets.UTF_8));
-//			vector.getMutator().startNewGroup(0);
-			vector.getMutator().startNewValue(0);
-			vector.getMutator().addSafe(0, outbuff);
-			vector.getMutator().setValueCount(1);
-//			logger.info("Shadi: vector = "+ new String(vector.getData().array(), com.google.common.base.Charsets.UTF_8));
-			recordCount++;
+
+				vector.allocateNewSafe();
+				
+//				vector.getMutator().addSafe(recordCount, outbuff);
+				
+				vector.getMutator().addSafe(recordCount, this.inputPath.getBytes());
+
+				vector.getMutator().setValueCount(recordCount);
+				
+				recordCount++;
+
 			if (recordCount == 0) {
 				throw new IOException("Record was too large to copy into vector.");
 			}
