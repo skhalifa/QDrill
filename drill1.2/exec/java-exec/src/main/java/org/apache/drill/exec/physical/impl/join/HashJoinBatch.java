@@ -254,7 +254,7 @@ public class HashJoinBatch extends AbstractRecordBatch<HashJoinPOP> {
           for (final VectorWrapper<?> wrapper : left) {
             wrapper.getValueVector().clear();
           }
-          left.kill(true);
+//          left.kill(true);
           leftUpstream = next(HashJoinHelper.LEFT_INPUT, left);
           while (leftUpstream == IterOutcome.OK_NEW_SCHEMA || leftUpstream == IterOutcome.OK) {
             for (final VectorWrapper<?> wrapper : left) {
