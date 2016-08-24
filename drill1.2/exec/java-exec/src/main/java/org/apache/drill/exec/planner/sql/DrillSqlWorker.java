@@ -197,6 +197,10 @@ public class DrillSqlWorker {
 	    		sql=newSqlBefore+functionName+"("+operation+","+args+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
 	    		sql=sql.replace(';', ',');
     		}
+    		if (!sql.toLowerCase().contains("order by")){
+    			sql+=" order by 1";
+    		}
+    		originalSql = sql;
     		logger.info("Final new train SQL statement= "+sql);
     	} else 	if(sql.toLowerCase().contains("qdm_score") || sql.toLowerCase().contains("qdm_update")){
     		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_"));
