@@ -70,7 +70,9 @@ public abstract class AggPruleBase extends Prule {
     for (AggregateCall aggCall : aggregate.getAggCallList()) {
       String name = aggCall.getAggregation().getName();
       if ( ! (name.equals("SUM") || name.equals("MIN") || name.equals("MAX") || name.equals("COUNT")
-              || name.equals("$SUM0") || (name.toLowerCase().contains("qdm") && name.toLowerCase().contains("train")) )) {
+              || name.equals("$SUM0") 
+              || (name.toLowerCase().contains("qdm") && name.toLowerCase().contains("train")) 
+              || (name.toLowerCase().contains("qdm") && name.toLowerCase().contains("ensemble")))) {
         return false;
       }
     }
