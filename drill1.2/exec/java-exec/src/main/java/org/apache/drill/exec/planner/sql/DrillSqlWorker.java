@@ -146,7 +146,7 @@ public class DrillSqlWorker {
     try {
     	String originalSql = sql;
     	logger.info("SQL string with pointer= "+sql);
-    	if(sql.toLowerCase().contains("qdm_train") || sql.toLowerCase().contains("qdm_ensemble")){
+    	if(sql.toLowerCase().contains("qdm_train")){
     		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_"));
     		logger.info("before qdmFunction= "+newSqlBefore);
     		
@@ -197,12 +197,12 @@ public class DrillSqlWorker {
 	    		sql=newSqlBefore+functionName+"("+operation+","+args+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
 	    		sql=sql.replace(';', ',');
     		}
-    		if (!sql.toLowerCase().contains("order by")){
+    		/*if (!sql.toLowerCase().contains("order by")){
     			sql+=" order by 1";
-    		}
+    		}*/
     		originalSql = sql;
     		logger.info("Final new train SQL statement= "+sql);
-    	} else 	if(sql.toLowerCase().contains("qdm_score") || sql.toLowerCase().contains("qdm_update")){
+    	} else if (sql.toLowerCase().contains("qdm_ensemble")){
     		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_"));
     		logger.info("before qdmFunction= "+newSqlBefore);
     		
@@ -230,15 +230,69 @@ public class DrillSqlWorker {
     		logger.info("qdmFunction= "+qdmFunction);
     		String functionName = qdmFunction.substring(0, qdmFunction.indexOf("("));
     		logger.info("functionName= "+functionName);
-    		//TODO: Fix bug when the string has commas inside a function like concat
     		StringTokenizer st = new StringTokenizer(qdmFunction.substring(qdmFunction.indexOf("(")+1), ",");
     		if(st.countTokens()<5){
     			sql = originalSql;
     		} else {
     			String operation = st.nextToken();
 	    		String args = st.nextToken();
-	    		String model = st.nextToken();
+//	    		String modelName = st.nextToken();
 	    		logger.info("operation= "+operation);
+	    		logger.info("args= "+args);
+//	    		logger.info("modelName= "+modelName);
+	    		String firstAttribute = st.nextToken();
+	    		boolean hasMoreAttribtues = false;
+	    		String concatString = "concat("+firstAttribute;
+	    		while (st.hasMoreTokens()) {
+	    			concatString+=","+"','"+","+st.nextToken();
+	    			hasMoreAttribtues = true;
+	    		}
+	    		concatString+=")";
+//	    		sql=newSqlBefore+functionName+"("+operation+","+args+","+modelName+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
+	    		sql=newSqlBefore+functionName+"("+operation+","+args+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
+	    		sql=sql.replace(';', ',');
+    		}
+    		/*if (!sql.toLowerCase().contains("order by")){
+    			sql+=" order by 1";
+    		}*/
+    		originalSql = sql;
+    		logger.info("Final new train SQL statement= "+sql);
+    	} else 	if(sql.toLowerCase().contains("qdm_score")){
+    		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_"));
+    		logger.info("before qdmFunction= "+newSqlBefore);
+    		
+    		int brackets=0;
+    		int i=sql.toLowerCase().indexOf("qdm_")+4;
+    		for(;i<sql.length();i++){
+    			if(sql.charAt(i)=='('||sql.charAt(i)=='{'||sql.charAt(i)=='[')
+    				brackets++;
+    			else if(sql.charAt(i)==')'||sql.charAt(i)=='}'||sql.charAt(i)==']'){
+    				brackets--;
+    			}
+    			
+    			if(brackets>1 && sql.charAt(i)==','){
+    				sql = sql.substring(0,i)+';'+sql.substring(i+1);
+    			}
+    			
+    			if(sql.charAt(i)==')' && brackets==0)
+    				break;
+    		}
+    		
+    		logger.info("Transition with ; insterted= "+sql);
+    		String newSqlAfter = sql.substring(i+1);
+    		logger.info("after qdmFunction= "+newSqlAfter);
+    		String qdmFunction = sql.substring(sql.toLowerCase().indexOf("qdm_"), i+1);
+    		logger.info("qdmFunction= "+qdmFunction);
+    		String functionName = qdmFunction.substring(0, qdmFunction.indexOf("("));
+    		logger.info("functionName= "+functionName);
+    		StringTokenizer st = new StringTokenizer(qdmFunction.substring(qdmFunction.indexOf("(")+1), ",");
+    		if(st.countTokens()<4){
+    			sql = originalSql;
+    		} else {
+//    			String operation = st.nextToken();
+	    		String args = st.nextToken();
+	    		String model = st.nextToken();
+//	    		logger.info("operation= "+operation);
 	    		logger.info("args= "+args);
 //	    		logger.info("modelName= "+model);
 	    		String firstAttribute = st.nextToken();
@@ -250,6 +304,59 @@ public class DrillSqlWorker {
 	    		}
 	    		concatString+=")";
 //	    		sql=newSqlBefore+functionName+"("+operation+","+args+","+modelName+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
+//	    		sql=newSqlBefore+functionName+"("+operation+","+args+","+model+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
+	    		sql=newSqlBefore+functionName+"("+args+","+model+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
+	    		sql=sql.replace(';', ',');
+    		}
+    		logger.info("Final new score SQL statement= "+sql);
+    	} else 	if(sql.toLowerCase().contains("qdm_update")){
+    		String newSqlBefore = sql.substring(0, sql.toLowerCase().indexOf("qdm_"));
+    		logger.info("before qdmFunction= "+newSqlBefore);
+    		
+    		int brackets=0;
+    		int i=sql.toLowerCase().indexOf("qdm_")+4;
+    		for(;i<sql.length();i++){
+    			if(sql.charAt(i)=='('||sql.charAt(i)=='{'||sql.charAt(i)=='[')
+    				brackets++;
+    			else if(sql.charAt(i)==')'||sql.charAt(i)=='}'||sql.charAt(i)==']'){
+    				brackets--;
+    			}
+    			
+    			if(brackets>1 && sql.charAt(i)==','){
+    				sql = sql.substring(0,i)+';'+sql.substring(i+1);
+    			}
+    			
+    			if(sql.charAt(i)==')' && brackets==0)
+    				break;
+    		}
+    		
+    		logger.info("Transition with ; insterted= "+sql);
+    		String newSqlAfter = sql.substring(i+1);
+    		logger.info("after qdmFunction= "+newSqlAfter);
+    		String qdmFunction = sql.substring(sql.toLowerCase().indexOf("qdm_"), i+1);
+    		logger.info("qdmFunction= "+qdmFunction);
+    		String functionName = qdmFunction.substring(0, qdmFunction.indexOf("("));
+    		logger.info("functionName= "+functionName);
+    		StringTokenizer st = new StringTokenizer(qdmFunction.substring(qdmFunction.indexOf("(")+1), ",");
+    		if(st.countTokens()<5){
+    			sql = originalSql;
+    		} else {
+    			String operation = st.nextToken();
+	    		String args = st.nextToken();
+	    		String model = st.nextToken();
+	    		logger.info("operation= "+operation);
+	    		logger.info("args= "+args);
+	    		logger.info("modelName= "+model);
+	    		String firstAttribute = st.nextToken();
+	    		boolean hasMoreAttribtues = false;
+	    		String concatString = "concat("+firstAttribute;
+	    		while (st.hasMoreTokens()) {
+	    			concatString+=","+"','"+","+st.nextToken();
+	    			hasMoreAttribtues = true;
+	    		}
+	    		concatString+=")";
+//	    		sql=newSqlBefore+functionName+"("+operation+","+args+","+modelName+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
+//	    		sql=newSqlBefore+functionName+"("+operation+","+args+","+model+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
 	    		sql=newSqlBefore+functionName+"("+operation+","+args+","+model+","+(hasMoreAttribtues?concatString:firstAttribute)+newSqlAfter;
 	    		sql=sql.replace(';', ',');
     		}
