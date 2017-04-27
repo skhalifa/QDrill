@@ -26,32 +26,48 @@ QDrill is scalable, offers an easy interface, no storage overhead and distribute
 ----
 Clone both projects in this repository: drill 1.2 and Weka.
 - drill 1.2 project is the modified Apache Drill 1.2 supporting the new Distributed Analytics Query Language (DAQL) and the new Analytics Adaptor for distributed execution of clustering algorithms.
+
 - Weka project is the Analytics Plugin for Weka where the data transformation between Drill format and Weka's ARFF format is made and the WEKA APIs are used to execute WEKA algorithms. This project can also act as a template for developing Analytics plugins for other data mining libraries like R.
 
 ---
 ## Local Installation Instructions (Follow these steps to run Modeler on a single local Drill/QDrill node)
 ----
 1. Download the following:
+
   a. QDrill 1.2 tar file (based on Apache Drill 1.2 and WEKA 3.7.13): https://github.com/skhalifa/QDrill/releases/tag/qdrill12
+  
   b. QDrill Modeler Custom Node V0.91: https://github.com/skhalifa/QDrill/blob/master/QDrillv0.91.mpe?raw=true
+  
   c. MapR Drill ODBC 64 Driver 1.02.01.1001: http://package.mapr.com/tools/MapR-ODBC/MapR_Drill/MapRDrill_odbc_v1.2.1.1000/MapRDrillODBC64.msi
+  
   d. IBM SPSS Modeler 18 [Free 30-day trial]
+  
   e. SPSS_Modeler_REssentials_18.0_Win64 https://www-01.ibm.com/marketing/iwm/iwm/web/preLogin.do?source=swg-tspssp
+  
   f. R x64 3.2.1 https://cran.r-project.org/bin/windows/base/old/3.2.1/
+  
   g. RODBC package [In R, type the following command: install.packages("RODBC")]
 
 2. Install & Run Drill/QDrill Server (For more info, https://drill.apache.org/docs/install-drill-introduction/):
+
 untar qdrill-1.2.0.tar
+
 >> cd <path-to>\qdrill-1.2.0\bin
+
 WINDOWS [Start the server and SQL shell] >> sqlline -u "jdbc:drill:schema=dfs.root;zk=local" -n admin -p admin
+
 LINUX [Start the server] >> ./drillbit.sh start
+
 LINUX [Start the SQL shell] >> ./drill-conf
 
 3. Wait a minute for QDrill to start, then go to Drill/QDrill web interface (http://localhost:8047/) and enable the Storage Plugins you will be using. For more details, please check https://drill.apache.org/docs/connect-a-data-source-introduction/
 
 4. Install:
+
   a. MapR Drill ODBC 64 Driver 1.02.01.1001 and configure it to the IP address of your drill server.
+  
   b. RODBC package in R [In R, type the following command: install.packages("RODBC")]
+  
   c. SPSS_Modeler_REssentials_18.0_Win64
   
 5. Open SPSS Modeler, Go to the "Extensions" Tab and select "Custom Node Dialog Builder..." -> Hit Open -> Select QDrillv0.91.mpe -> Hit Install. Now you should see the QDrill node in your Modeling Palette undeer Classification.
@@ -61,17 +77,27 @@ LINUX [Start the SQL shell] >> ./drill-conf
 ## Distributed Installation Instructions (Follow these steps to run Modeler on a Drill/QDrill cluster)
 ----
 1. Download the following:
+
   a. QDrill 1.2 tar file (based on Apache Drill 1.2 and WEKA 3.7.13): https://github.com/skhalifa/QDrill/releases/tag/qdrill12
+  
   b. QDrill Modeler Custom Node V0.91: https://github.com/skhalifa/QDrill/blob/master/QDrillv0.91.mpe?raw=true
+  
   c. MapR Drill ODBC 64 Driver 1.02.01.1001: http://package.mapr.com/tools/MapR-ODBC/MapR_Drill/MapRDrill_odbc_v1.2.1.1000/MapRDrillODBC64.msi
+  
   d. IBM SPSS Modeler 18 [Free 30-day trial]
+  
   e. SPSS_Modeler_REssentials_18.0_Win64 https://www-01.ibm.com/marketing/iwm/iwm/web/preLogin.do?source=swg-tspssp
+  
   f. R x64 3.2.1 https://cran.r-project.org/bin/windows/base/old/3.2.1/
+  
   g. RODBC package [In R, type the following command: install.packages("RODBC")]
 
 2. Install & Run Drill/QDrill on <b>all Drill/QDrill cluster nodes</b> (For more info, https://drill.apache.org/docs/install-drill-introduction/):
+
 untar qdrill-1.2.0.tar
+
 >> cd <path-to>\qdrill-1.2.0\bin
+
 LINUX [Start the server and SQL shell] >> ./drillbit.sh start
 
 3. Wait a minute for QDrill to start, then go to Drill/QDrill web interface (http://server-ip:8047/) and enable the Storage Plugins you will be using. For more details, please check https://drill.apache.org/docs/connect-a-data-source-introduction/
