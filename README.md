@@ -136,7 +136,7 @@ Now you should see the QDrill node in your Modeling Palette under Classification
  
  g. <b>Number of Partitions</b>, is the number of threads you want to while building your model. More threads means faster training but can cause a drop in model's accuracy if your have a small dataset. 
  
- Current QDrill Modeler custom node limitations:
+ <b>Current QDrill Modeler custom node limitations:</b>
  
 1. All Training data attributes must be concatenated using commas "," into a single attribute called "columns" (all lower case)
 
