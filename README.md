@@ -50,15 +50,15 @@ Clone both projects in this repository: drill 1.2 and Weka.
 
 2. Install & Run Drill/QDrill Server (For more info, https://drill.apache.org/docs/install-drill-introduction/):
 
-untar qdrill-1.2.0.tar
+>> untar qdrill-1.2.0.tar
 
 >> cd <path-to>\qdrill-1.2.0\bin
 
-WINDOWS [Start the server and SQL shell] >> sqlline -u "jdbc:drill:schema=dfs.root;zk=local" -n admin -p admin
+>> WINDOWS [Start the server and SQL shell] >> sqlline -u "jdbc:drill:schema=dfs.root;zk=local" -n admin -p admin
 
-LINUX [Start the server] >> ./drillbit.sh start
+>> LINUX [Start the server] >> ./drillbit.sh start
 
-LINUX [Start the SQL shell] >> ./drill-conf
+>> LINUX [Start the SQL shell] >> ./drill-conf
 
 3. Wait a minute for QDrill to start, then go to Drill/QDrill web interface (http://localhost:8047/) and enable the Storage Plugins you will be using. For more details, please check https://drill.apache.org/docs/connect-a-data-source-introduction/
 
@@ -94,11 +94,11 @@ LINUX [Start the SQL shell] >> ./drill-conf
 
 2. Install & Run Drill/QDrill <b>on all Drill/QDrill cluster nodes</b> (For more info, https://drill.apache.org/docs/install-drill-introduction/):
 
-untar qdrill-1.2.0.tar
+>> untar qdrill-1.2.0.tar
 
 >> cd <path-to>\qdrill-1.2.0\bin
 
-LINUX [Start the server and SQL shell] >> ./drillbit.sh start
+>> LINUX [Start the server and SQL shell] >> ./drillbit.sh start
 
 3. Wait a minute for QDrill to start, then go to Drill/QDrill web interface (http://server-ip:8047/) and enable the Storage Plugins you will be using. For more details, please check https://drill.apache.org/docs/connect-a-data-source-introduction/
 
@@ -123,6 +123,7 @@ Now you should see the QDrill node in your Modeling Palette under Classification
 3. Configure the QDrill node:
 <img src="https://github.com/skhalifa/QDrill/blob/master/q4.png?raw=true"/>
  a. <b>Connecction String</b>, you can leave the default value which works with the default name for the ODBC connection (MapR Drill ODBC Driver for Drill DSN) and a localhost Drill/QDrill server. If you changed the name your ODBC connection or if you want to connect to a Drill/QDrill server that is not running on your localhost, you will need to update the connection string to the new values.
+ 
  
  b. <b> Model Name</b>, specify the name of the predictive model you want to create (must be unique).
  
@@ -150,7 +151,7 @@ Now you should see the QDrill node in your Modeling Palette under Classification
 ## Using QDrill without Modeler (You can run these SQL queries from Java, php, R, Python or any other application using the JDBC/ODBC connection)
 ----
 ### Distributed Training of a WEKA Model Using DAQL
-
+<code>
 SQL-1> USE dfs.tmp;
 
 SQL-2> ALTER SESSION SET `store.format`='model';
@@ -174,7 +175,7 @@ SQL-3> TRAIN MODEL <model name> AS
       	    ) as data
             
   	    GROUP BY data.partition);
-
+</code>
 This statement trains a WEKA classifier ensemble using QDrill's LADP and DMD algorithms in a distributed fashion. The first SQL statement changes the storage location to a writable location. The second SQL statement tells the Drill Storage Adaptor to use the introduced Model Storage Plugin to save the model after training. The third SQL statement consists of three nested DAQL statement: 
 
 •	The inner statement invokes the LADP partitioning algorithm using the qdm_LADP UDF with arguments: the number of partitions <num parts>, the record’s attributes <columns> and the record’s label <label_column>, respectively. This statement fetches the training data from any Drill-supported data store using the FROM clause. The FROM clause can also have a join between two heterogeneous data sources. The WHERE clause specifies any conditions on the records to fetch. 
@@ -185,7 +186,7 @@ This statement trains a WEKA classifier ensemble using QDrill's LADP and DMD alg
 
 
 ### Distributed Scoring of a Trained WEKA Model Using DAQL
-
+<code>
 SQL-1> USE dfs.tmp;
 
 SQL-2> ALTER SESSION SET `store.format`=csv';
@@ -201,7 +202,7 @@ SQL-3> CREATE TABLE <results> AS
                          APPLYING <model name> AS mymodel
                          
        WHERE <conditions>;
-       
+</code>       
 The first SQL statement changes the storage location to a writable location. The second SQL statement tells the Drill Storage Adaptor to save the scored records in CSV format. The third SQL statement fetches the unlabeled data using the FROM clause. The APPLYING keyword in the FROM clause tells Drill to fetch the trained model file <model name>. The WHERE clause specifies any conditions on the records to fetch. The SQL then uses the new qdm_score_weka UDF to apply the trained model on the unlabeled data. The UDF specifies the model and the data columns to use for scoring, respectively. This UDF outputs a label for each record in the unlabeled dataset. Finally, the SQL statement uses the CREATE TABLE clause to save the records along with their label in a new table <results>.
 
 ---
