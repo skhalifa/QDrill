@@ -25,7 +25,7 @@ QDrill is scalable, offers an easy interface, no storage overhead and distribute
 ---
 ## Requirements to modify QDrill (Not required if you just want to use QDrill)
 ----
-Clone both projects in this repository: drill 1.2 and Weka.
+Fork both projects in this repository: drill 1.2 and Weka.
 - drill 1.2 project is the modified Apache Drill 1.2 supporting the new Distributed Analytics Query Language (DAQL) and the new Analytics Adaptor for distributed execution of clustering algorithms.
 
 - Weka project is the Analytics Plugin for Weka where the data transformation between Drill format and Weka's ARFF format is made and the WEKA APIs are used to execute WEKA algorithms. This project can also act as a template for developing Analytics plugins for other data mining libraries like R.
