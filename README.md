@@ -1,3 +1,6 @@
+<img align="center" src="http://www.queensu.ca/mc_administrator/sites/default/files/assets/pages/QueensLogo_colour.png" style=:width:40px;" alt="Queens University">
+<img align="center" src="https://github.com/skhalifa/QDrill/blob/master/dsl.png?raw=true" style=:width:40px;" alt="Queens University">
+
 # QDrill 
 Distributing classification from within your SQL statements!
 http://cs.queensu.ca/~khalifa/qdrill
