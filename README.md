@@ -38,19 +38,19 @@ Fork both projects in this repository: drill 1.2 and Weka.
 ----
 1. Download the following:
 
-  a. QDrill 1.2 tar file (based on Apache Drill 1.2 and WEKA 3.7.13): https://github.com/skhalifa/QDrill/releases/tag/qdrill12
+    a. QDrill 1.2 tar file (based on Apache Drill 1.2 and WEKA 3.7.13): https://github.com/skhalifa/QDrill/releases/tag/qdrill12
   
-  b. QDrill Modeler Custom Node V0.91: https://github.com/skhalifa/QDrill/blob/master/QDrillv0.91.mpe?raw=true
+    b. QDrill Modeler Custom Node V0.91: https://github.com/skhalifa/QDrill/blob/master/QDrillv0.91.mpe?raw=true
   
-  c. MapR Drill ODBC 64 Driver 1.02.01.1001: http://package.mapr.com/tools/MapR-ODBC/MapR_Drill/MapRDrill_odbc_v1.2.1.1000/MapRDrillODBC64.msi
+    c. MapR Drill ODBC 64 Driver 1.02.01.1001: http://package.mapr.com/tools/MapR-ODBC/MapR_Drill/MapRDrill_odbc_v1.2.1.1000/MapRDrillODBC64.msi
   
-  d. IBM SPSS Modeler 18 [Free 30-day trial]
+    d. IBM SPSS Modeler 18 [Free 30-day trial]
   
-  e. SPSS_Modeler_REssentials_18.0_Win64 https://www-01.ibm.com/marketing/iwm/iwm/web/preLogin.do?source=swg-tspssp
+    e. SPSS_Modeler_REssentials_18.0_Win64 https://www-01.ibm.com/marketing/iwm/iwm/web/preLogin.do?source=swg-tspssp
   
-  f. R x64 3.2.1 https://cran.r-project.org/bin/windows/base/old/3.2.1/
+    f. R x64 3.2.1 https://cran.r-project.org/bin/windows/base/old/3.2.1/
   
-  g. RODBC package [In R, type the following command: install.packages("RODBC")]
+    g. RODBC package [In R, type the following command: install.packages("RODBC")]
 
 2. Install & Run Drill/QDrill Server (For more info, https://drill.apache.org/docs/install-drill-introduction/):
 ```bash
@@ -64,11 +64,11 @@ Fork both projects in this repository: drill 1.2 and Weka.
 
 4. Install:
 
-  a. MapR Drill ODBC 64 Driver 1.02.01.1001 and configure it to the IP address of your drill server.
+    a. MapR Drill ODBC 64 Driver 1.02.01.1001 and configure it to the IP address of your drill server.
   
-  b. RODBC package in R [In R, type the following command: install.packages("RODBC")]
+    b. RODBC package in R [In R, type the following command: install.packages("RODBC")]
   
-  c. SPSS_Modeler_REssentials_18.0_Win64
+    c. SPSS_Modeler_REssentials_18.0_Win64
   
 5. Open SPSS Modeler, Go to the "Extensions" Tab and select "Custom Node Dialog Builder..." -> Hit Open -> Select QDrillv0.91.mpe -> Hit Install. Now you should see the QDrill node in your Modeling Palette undeer Classification.
 
@@ -78,19 +78,19 @@ Fork both projects in this repository: drill 1.2 and Weka.
 ----
 1. Download the following:
 
-  a. QDrill 1.2 tar file (based on Apache Drill 1.2 and WEKA 3.7.13): https://github.com/skhalifa/QDrill/releases/tag/qdrill12
+    a. QDrill 1.2 tar file (based on Apache Drill 1.2 and WEKA 3.7.13): https://github.com/skhalifa/QDrill/releases/tag/qdrill12
   
-  b. QDrill Modeler Custom Node V0.91: https://github.com/skhalifa/QDrill/blob/master/QDrillv0.91.mpe?raw=true
+    b. QDrill Modeler Custom Node V0.91: https://github.com/skhalifa/QDrill/blob/master/QDrillv0.91.mpe?raw=true
   
-  c. MapR Drill ODBC 64 Driver 1.02.01.1001: http://package.mapr.com/tools/MapR-ODBC/MapR_Drill/MapRDrill_odbc_v1.2.1.1000/MapRDrillODBC64.msi
+    c. MapR Drill ODBC 64 Driver 1.02.01.1001: http://package.mapr.com/tools/MapR-ODBC/MapR_Drill/MapRDrill_odbc_v1.2.1.1000/MapRDrillODBC64.msi
   
-  d. IBM SPSS Modeler 18 [Free 30-day trial]
+    d. IBM SPSS Modeler 18 [Free 30-day trial]
   
-  e. SPSS_Modeler_REssentials_18.0_Win64 https://www-01.ibm.com/marketing/iwm/iwm/web/preLogin.do?source=swg-tspssp
+    e. SPSS_Modeler_REssentials_18.0_Win64 https://www-01.ibm.com/marketing/iwm/iwm/web/preLogin.do?source=swg-tspssp
   
-  f. R x64 3.2.1 https://cran.r-project.org/bin/windows/base/old/3.2.1/
+    f. R x64 3.2.1 https://cran.r-project.org/bin/windows/base/old/3.2.1/
   
-  g. RODBC package [In R, type the following command: install.packages("RODBC")]
+    g. RODBC package [In R, type the following command: install.packages("RODBC")]
 
 2. Install & Run Drill/QDrill <b>on all Drill/QDrill cluster nodes</b> (For more info, https://drill.apache.org/docs/install-drill-introduction/):
 ```bash
@@ -102,11 +102,11 @@ Fork both projects in this repository: drill 1.2 and Weka.
 
 4. Install <b>on your local computer where Modeler is running</b>:
 
-  a. MapR Drill ODBC 64 Driver 1.02.01.1001 and configure it to the IP address of your drill server.
+    a. MapR Drill ODBC 64 Driver 1.02.01.1001 and configure it to the IP address of your drill server.
   
-  b. RODBC package in R [In R, type the following command: install.packages("RODBC")]
+    b. RODBC package in R [In R, type the following command: install.packages("RODBC")]
   
-  c. SPSS_Modeler_REssentials_18.0_Win64
+    c. SPSS_Modeler_REssentials_18.0_Win64
   
 5. Open SPSS Modeler, Go to the "Extensions" Tab and select "Custom Node Dialog Builder..." -> Hit Open -> Select QDrillv0.91.mpe -> Hit Install. Now you should see the QDrill node in your Modeling Palette under Classification.
 
@@ -124,30 +124,30 @@ Now you should see the QDrill node in your Modeling Palette under Classification
 3. Configure the QDrill node:
 <img src="https://github.com/skhalifa/QDrill/blob/master/q4.png?raw=true"/>
 
- a. <b>Connecction String</b>, you can leave the default value which works with the default name for the ODBC connection (MapR Drill ODBC Driver for Drill DSN) and a localhost Drill/QDrill server. If you changed the name your ODBC connection or if you want to connect to a Drill/QDrill server that is not running on your localhost, you will need to update the connection string to the new values.
+  a. <b>Connecction String</b>, you can leave the default value which works with the default name for the ODBC connection (MapR Drill ODBC Driver for Drill DSN) and a localhost Drill/QDrill server. If you changed the name your ODBC connection or if you want to connect to a Drill/QDrill server that is not running on your localhost, you will need to update the connection string to the new values.
  
  
- b. <b> Model Name</b>, specify the name of the predictive model you want to create (must be unique).
+  b. <b> Model Name</b>, specify the name of the predictive model you want to create (must be unique).
  
- c. <b> Data Mining Algorithm</b>, choose one of the WEKA classification algorithms (all algorithms will be distributed on the QDrill cluster)
+  c. <b> Data Mining Algorithm</b>, choose one of the WEKA classification algorithms (all algorithms will be distributed on the QDrill cluster)
  
- d. <b>Classes</b>, enumerate the name of the classes (labels) you have in your data separated by commas.
+  d. <b>Classes</b>, enumerate the name of the classes (labels) you have in your data separated by commas.
  
- e. <b>Training Data</b>, the name of your trianing data source. For example iris.data.csv to use the iris.data.csv file on your HDFS. For data stored in MongoDB, use mongo.<database-name>.`<collection-name>` where the collection name MUST be between the quotes ` and `. For example mongo.test.'iris.data' to use the test.iris.data MongoDB document.
+  e. <b>Training Data</b>, the name of your trianing data source. For example iris.data.csv to use the iris.data.csv file on your HDFS. For data stored in MongoDB, use mongo.<database-name>.\`\<collection-name\>\` where the collection name MUST be between the quotes \` and \`. For example mongo.test.\`iris.data\` to use the test.iris.data MongoDB document.
  
- f. <b>Scoring Data</b>, same as Training Data. However, scoring data is the data you want to predict its label. <b> A dummy Label attribute must be added as the last column in your scoring data file.</b> 
+  f. <b>Scoring Data</b>, same as Training Data. However, scoring data is the data you want to predict its label. <b> A dummy Label attribute must be added as the last column in your scoring data file.</b> 
  
- g. <b>Number of Partitions</b>, is the number of threads you want to while building your model. More threads means faster training but can cause a drop in model's accuracy if your have a small dataset. 
+  g. <b>Number of Partitions</b>, is the number of threads you want to while building your model. More threads means faster training but can cause a drop in model's accuracy if your have a small dataset. 
  
  <b>Current QDrill Modeler custom node limitations:</b>
  
-1. All Training data attributes must be concatenated using commas "," into a single attribute called "columns" (all lower case)
+  1. All Training data attributes must be concatenated using commas "," into a single attribute called "columns" (all lower case)
 
-2. The Label attribute must be the last value in the "columns" string of the Training records.
+  2. The Label attribute must be the last value in the "columns" string of the Training records.
 
-3. All Scoring data attributes must be concatenated using commas "," into a single attribute called "columns" (all lower case)
+  3. All Scoring data attributes must be concatenated using commas "," into a single attribute called "columns" (all lower case)
 
-4. A dummy Label attribute must be added as the last value in the "columns" string of the Scoring records at it must have a valid class label value.
+  4. A dummy Label attribute must be added as the last value in the "columns" string of the Scoring records at it must have a valid class label value.
 
 ---
 ## Using QDrill without Modeler (You can run these SQL queries from Java, php, R, Python or any other application using the JDBC/ODBC connection)
