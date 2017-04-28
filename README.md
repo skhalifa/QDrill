@@ -133,7 +133,7 @@ Now you should see the QDrill node in your Modeling Palette under Classification
  
   d. <b>Classes</b>, enumerate the name of the classes (labels) you have in your data separated by commas.
  
-  e. <b>Training Data</b>, the name of your trianing data source. For example iris.data.csv to use the iris.data.csv file on your HDFS. For data stored in MongoDB, use mongo.<database-name>.\`\<collection-name\>\` where the collection name MUST be between the quotes \` and \`. For example mongo.test.\`iris.data\` to use the test.iris.data MongoDB document.
+  e. <b>Training Data</b>, the name of your trianing data source. For example iris.data.csv to use the iris.data.csv file on your HDFS. For data stored in MongoDB, use mongo.\<database-name\>.\`\<collection-name\>\` where the collection name MUST be between the quotes \` and \`. For example mongo.test.\`iris.data\` to use the test.iris.data MongoDB document.
  
   f. <b>Scoring Data</b>, same as Training Data. However, scoring data is the data you want to predict its label. <b> A dummy Label attribute must be added as the last column in your scoring data file.</b> 
  
